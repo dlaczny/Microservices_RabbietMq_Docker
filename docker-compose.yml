@@ -1,0 +1,43 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.4'
+
+services:
+    rabbitmq:
+      image: rabbitmq:3.9-management
+      container_name: rabbitmq
+      hostname: "rabbitmq"
+      labels:
+        NAME: "rabbitmq"
+      ports:
+        - 5672:5672
+        - 15672:15672
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    api:
+      image: api
+      container_name: api_client
+      build:
+        context: .
+        dockerfile: API/Dockerfile
+      ports:
+        - 80:80
+      volumes:
+        - ./Data:/var
+    workerservice:
+      container_name: workerservice
+      image: workerservice
+      restart: on-failure
+      depends_on:
+        - rabbitmq
+      links: 
+        - rabbitmq
+      build:
+        context: .
+        dockerfile: WorkerService/Dockerfile
+      volumes:
+        - ./Data:/var
+
