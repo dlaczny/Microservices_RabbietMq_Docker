@@ -29,7 +29,7 @@ namespace WorkerService.Repository
             var visitDto = JsonConvert.DeserializeObject<VisitCreateDto>(File.ReadAllText(filePath));
             var visit = _mapper.Map<Visit>(visitDto);
             await AddVisit(visit);
-            await DeleteFile(filePath);
+            DeleteFile(filePath);
         }
 
         private async Task AddVisit(Visit visit)
@@ -38,7 +38,7 @@ namespace WorkerService.Repository
             await _context.SaveChangesAsync();
         }
 
-        private async Task DeleteFile(string filePath)
+        private void DeleteFile(string filePath)
         {
             File.Delete(filePath);
         }

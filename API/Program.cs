@@ -15,7 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlite(@"Data Source=../var/Visits.db"));
 #endif
 
-builder.Services.AddTransient<IMessageBusRepository, MessageBusRepository>();
+builder.Services.AddSingleton<IMessageBusRepository, MessageBusRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

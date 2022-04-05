@@ -17,7 +17,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
 #endif
         services.AddHostedService<Worker>();
-        services.AddTransient<IVisitRepository, VisitRepository>();
+        services.AddSingleton<IVisitRepository, VisitRepository>();
     })
     .Build();
 

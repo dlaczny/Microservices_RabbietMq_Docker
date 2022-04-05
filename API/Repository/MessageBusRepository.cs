@@ -34,7 +34,7 @@ namespace API.Repository
             queue = channel;
         }
 
-        public async Task AddMessage(string fileName)
+        public void AddMessage(string fileName)
         {
             var body = Encoding.UTF8.GetBytes(fileName);
 
